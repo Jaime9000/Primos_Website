@@ -1,0 +1,4 @@
+Flask==2.3.2
+gunicorn==21.2.0
+stripe==12.3.0
+flask-stripe==0.1.0 
