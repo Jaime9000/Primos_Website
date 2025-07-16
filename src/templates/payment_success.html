@@ -1,17 +1,113 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful - Primos de Peláez FC</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/static/primosFamily.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .success-container {
+            margin-top: 2rem;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 text-center">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="text-success mb-4">Payment Successful!</h1>
-                    <p class="mb-4">Thank you for your payment. Your transaction has been completed successfully.</p>
-                    <a href="/" class="btn btn-primary">Return to Home</a>
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            color: #333;
+        }
+
+        .card-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        .btn-home {
+            background-color: #dc3545;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand" href="/">Primos de Peláez FC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/family">Family</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/revolution">Revolution</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacts">Contacts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="success-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="success-icon">✅</div>
+                            <h2 class="card-title">¡Gracias por tu apoyo!</h2>
+                            <p class="mb-4">
+                                Your contribution to Primos de Peláez FC has been received. 
+                                We are grateful for your support in helping us maintain and grow our soccer family! 
+                                🙏⚽️
+                            </p>
+                            <a href="/" class="btn btn-home text-white">Return to Home</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %} 
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
