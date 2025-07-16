@@ -51,6 +51,38 @@ def create_payment():
     except Exception as e:
         return jsonify(error=str(e)), 403
 
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers.get('Stripe-Signature')
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        # Invalid payload
+        return jsonify({'error': str(e)}), 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return jsonify({'error': str(e)}), 400
+
+    # Handle the event
+    if event.type == 'payment_intent.succeeded':
+        payment_intent = event.data.object
+        # Handle successful payment
+        print(f"Payment succeeded for amount: {payment_intent.amount}")
+        # You can add custom logic here (e.g., update database, send email)
+        
+    elif event.type == 'payment_intent.payment_failed':
+        payment_intent = event.data.object
+        # Handle failed payment
+        print(f"Payment failed for amount: {payment_intent.amount}")
+        # You can add custom logic here
+
+    return jsonify({'status': 'success'})
+
 @app.route('/payment-success')
 def payment_success():
     return render_template('payment_success.html')

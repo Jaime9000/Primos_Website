@@ -1,81 +1,331 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Primos de Peláez FC - Support Us</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/static/primosFamily.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .payment-container {
+            margin-top: 2rem;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Payment</h2>
-                    <form id="payment-form">
-                        <div class="mb-3">
-                            <label for="amount" class="form-label">Amount (USD)</label>
-                            <input type="number" class="form-control" id="amount" value="10" min="1" step="0.01">
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            color: #333;
+        }
+
+        .card-title {
+            color: #dc3545;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+
+        #submit {
+            background-color: #dc3545;
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        #submit:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        #submit:disabled {
+            background-color: #dc354580;
+            transform: none;
+        }
+
+        .support-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #28a745;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-direction: column;
+        }
+
+        .payment-methods {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+
+        .payment-methods img {
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .payment-methods .divider {
+            width: 2px;
+            height: 32px;
+            background-color: #dee2e6;
+            margin: 0;
+        }
+
+        .payment-methods svg {
+            height: 32px;
+            width: auto;
+        }
+
+        /* Stripe Elements Styling */
+        #payment-element {
+            padding: 12px;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #ced4da;
+            transition: all 0.2s ease;
+        }
+
+        #payment-element.focused {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+
+        #payment-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        #payment-message.error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+        }
+
+        #payment-message.success {
+            background-color: #d1e7dd;
+            border: 1px solid #badbcc;
+            color: #0f5132;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand" href="/">Primos de Peláez FC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/family">Family</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/revolution">Revolution</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacts">Contacts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light" href="/payment">Support Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="payment-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title text-center">Support Our Family</h2>
+                            <div class="secure-badge">
+                                <div class="d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-check" viewBox="0 0 16 16">
+                                        <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                                        <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                    <span class="ms-2">Secure Payment via Stripe</span>
+                                </div>
+                                <div class="payment-methods">
+                                    <!-- Apple Pay -->
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDMgMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTcuMjY3IDQuMTY3YzEuMDY3IDAgMS44NjctLjggMS44NjctMS44NjdzLS44LTEuODY3LTEuODY3LTEuODY3LTEuODY3LjgtMS44NjcgMS44NjcuOCAxLjg2NyAxLjg2NyAxLjg2N3ptLjIgMi4wNjZjLTEuMDY3IDAtMS44NjcuOC0xLjg2NyAxLjg2N3MuOCAxLjg2NyAxLjg2NyAxLjg2NyAxLjg2Ny0uOCAxLjg2Ny0xLjg2Ny0uOC0xLjg2Ny0xLjg2Ny0xLjg2N3ptMTAuOCAwYy0xLjA2NyAwLTEuODY3LjgtMS44NjcgMS44NjdzLjggMS44NjcgMS44NjcgMS44NjcgMS44NjctLjggMS44NjctMS44NjctLjgtMS44NjctMS44NjctMS44Njd6IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Apple Pay" style="height: 32px;">
+                                    
+                                    <div class="divider"></div>
+                                    
+                                    <!-- Primos Logo -->
+                                    <svg width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <text x="5" y="24" font-family="Arial" font-size="24" font-weight="bold" fill="#dc3545">PRIMOS FC</text>
+                                        <circle cx="100" cy="16" r="8" fill="#dc3545"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <form id="payment-form">
+                                <div class="mb-4">
+                                    <label for="amount" class="form-label">Contribution Amount (USD)</label>
+                                    <input type="number" class="form-control" id="amount" value="10" min="1" step="0.01">
+                                </div>
+                                <div id="payment-element" class="mb-4">
+                                    <!-- Stripe Elements will be inserted here -->
+                                </div>
+                                <button id="submit" class="btn btn-primary w-100">
+                                    <span id="button-text">Support Now</span>
+                                    <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                </button>
+                                <div id="payment-message" class="mt-3 text-center d-none"></div>
+                                <p class="support-text mt-3">
+                                    Your contribution helps us maintain and grow our soccer family. Thank you for your support! 🙏⚽
+                                </p>
+                            </form>
                         </div>
-                        <div id="payment-element" class="mb-3">
-                            <!-- Stripe Elements will be inserted here -->
-                        </div>
-                        <button id="submit" class="btn btn-primary w-100">
-                            <span id="button-text">Pay now</span>
-                            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
-                        </button>
-                        <div id="payment-message" class="mt-3 text-center d-none"></div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    const stripe = Stripe('{{ stripe_public_key }}');
-    let elements;
-    let paymentElement;
+    <!-- Bootstrap JS and Stripe -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('{{ stripe_public_key }}');
+        let elements;
+        let paymentElement;
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        const response = await fetch('/create-payment-intent', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                amount: document.getElementById('amount').value * 100
-            })
+        // Initialize Stripe Elements with custom styling
+        const initializeStripe = async () => {
+            const response = await fetch('/create-payment-intent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: document.getElementById('amount').value * 100
+                })
+            });
+            const { clientSecret } = await response.json();
+
+            const appearance = {
+                theme: 'stripe',
+                variables: {
+                    colorPrimary: '#dc3545',
+                    colorBackground: '#ffffff',
+                    colorText: '#333333',
+                    colorDanger: '#dc3545',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial',
+                    spacingUnit: '4px',
+                    borderRadius: '8px',
+                },
+                rules: {
+                    '.Input': {
+                        border: '1px solid #ced4da',
+                        boxShadow: 'none',
+                        fontSize: '16px'
+                    },
+                    '.Input:focus': {
+                        border: '1px solid #dc3545',
+                        boxShadow: '0 0 0 0.25rem rgba(220, 53, 69, 0.25)'
+                    }
+                }
+            };
+
+            elements = stripe.elements({ 
+                clientSecret,
+                appearance
+            });
+            
+            paymentElement = elements.create('payment');
+            paymentElement.mount('#payment-element');
+
+            // Add focus styling
+            paymentElement.on('focus', function() {
+                document.getElementById('payment-element').classList.add('focused');
+            });
+            
+            paymentElement.on('blur', function() {
+                document.getElementById('payment-element').classList.remove('focused');
+            });
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeStripe);
+
+        // Handle amount changes
+        document.getElementById('amount').addEventListener('change', initializeStripe);
+
+        const form = document.getElementById('payment-form');
+        const submitButton = document.getElementById('submit');
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('button-text');
+        const paymentMessage = document.getElementById('payment-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            setLoading(true);
+
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/payment-success`,
+                },
+            });
+
+            if (error) {
+                paymentMessage.textContent = error.message;
+                paymentMessage.classList.remove('d-none');
+                paymentMessage.classList.add('error');
+                setLoading(false);
+            }
         });
-        const { clientSecret } = await response.json();
 
-        elements = stripe.elements({ clientSecret });
-        paymentElement = elements.create('payment');
-        paymentElement.mount('#payment-element');
-    });
-
-    const form = document.getElementById('payment-form');
-    const submitButton = document.getElementById('submit');
-    const spinner = document.getElementById('spinner');
-    const buttonText = document.getElementById('button-text');
-    const paymentMessage = document.getElementById('payment-message');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        setLoading(true);
-
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/payment-success`,
-            },
-        });
-
-        if (error) {
-            paymentMessage.textContent = error.message;
-            paymentMessage.classList.remove('d-none');
-            setLoading(false);
+        function setLoading(isLoading) {
+            submitButton.disabled = isLoading;
+            spinner.classList.toggle('d-none', !isLoading);
+            buttonText.classList.toggle('d-none', isLoading);
         }
-    });
-
-    function setLoading(isLoading) {
-        submitButton.disabled = isLoading;
-        spinner.classList.toggle('d-none', !isLoading);
-        buttonText.classList.toggle('d-none', isLoading);
-    }
-</script>
-{% endblock %} 
+    </script>
+</body>
+</html> 
