@@ -43,4 +43,10 @@ Thumbs.db
 
 # Environment variables
 .env
-.env.local 
+.env.local
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log 
