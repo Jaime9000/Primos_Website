@@ -94,20 +94,21 @@
         }
 
         .payment-methods img {
-            height: 32px;
+            height: 24px;
             object-fit: contain;
         }
 
         .payment-methods .divider {
             width: 2px;
-            height: 32px;
+            height: 24px;
             background-color: #dee2e6;
             margin: 0;
         }
 
         .payment-methods svg {
-            height: 32px;
+            height: 40px;
             width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         /* Stripe Elements Styling */
@@ -194,14 +195,35 @@
                                 </div>
                                 <div class="payment-methods">
                                     <!-- Apple Pay -->
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDMgMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTcuMjY3IDQuMTY3YzEuMDY3IDAgMS44NjctLjggMS44NjctMS44NjdzLS44LTEuODY3LTEuODY3LTEuODY3LTEuODY3LjgtMS44NjcgMS44NjcuOCAxLjg2NyAxLjg2NyAxLjg2N3ptLjIgMi4wNjZjLTEuMDY3IDAtMS44NjcuOC0xLjg2NyAxLjg2N3MuOCAxLjg2NyAxLjg2NyAxLjg2NyAxLjg2Ny0uOCAxLjg2Ny0xLjg2Ny0uOC0xLjg2Ny0xLjg2Ny0xLjg2N3ptMTAuOCAwYy0xLjA2NyAwLTEuODY3LjgtMS44NjcgMS44NjdzLjggMS44NjcgMS44NjcgMS44NjcgMS44NjctLjggMS44NjctMS44NjctLjgtMS44NjctMS44NjctMS44Njd6IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Apple Pay" style="height: 32px;">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDMgMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTcuMjY3IDQuMTY3YzEuMDY3IDAgMS44NjctLjggMS44NjctMS44NjdzLS44LTEuODY3LTEuODY3LTEuODY3LTEuODY3LjgtMS44NjcgMS44NjcuOCAxLjg2NyAxLjg2NyAxLjg2N3ptLjIgMi4wNjZjLTEuMDY3IDAtMS44NjcuOC0xLjg2NyAxLjg2N3MuOCAxLjg2NyAxLjg2NyAxLjg2NyAxLjg2Ny0uOCAxLjg2Ny0xLjg2Ny0uOC0xLjg2Ny0xLjg2Ny0xLjg2N3ptMTAuOCAwYy0xLjA2NyAwLTEuODY3LjgtMS44NjcgMS44NjdzLjggMS44NjcgMS44NjcgMS44NjcgMS44NjctLjggMS44NjctMS44NjctLjgtMS44NjctMS44NjctMS44Njd6IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Apple Pay" style="height: 24px; filter: brightness(0);">
                                     
                                     <div class="divider"></div>
                                     
                                     <!-- Primos Logo -->
-                                    <svg width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <text x="5" y="24" font-family="Arial" font-size="24" font-weight="bold" fill="#dc3545">PRIMOS FC</text>
-                                        <circle cx="100" cy="16" r="8" fill="#dc3545"/>
+                                    <svg width="40" height="48" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Outer decorative frame -->
+                                        <path d="M50 10 C25 10 10 25 10 50 V90 C10 105 50 115 50 115 C50 115 90 105 90 90 V50 C90 25 75 10 50 10" fill="white" stroke="#dc3545" stroke-width="2"/>
+                                        
+                                        <!-- Top Banner -->
+                                        <path d="M15 12 Q50 5 85 12" fill="#dc3545"/>
+                                        <text x="50" y="11" text-anchor="middle" font-family="Arial" font-size="8" fill="#FFD700">PRIMOS DE PELÁEZ</text>
+                                        
+                                        <!-- Inner Shield -->
+                                        <path d="M50 20 L75 30 V70 C75 80 50 90 50 90 C50 90 25 80 25 70 V30 Z" fill="#dc3545"/>
+                                        
+                                        <!-- Golden Eagle -->
+                                        <path d="M50 40 L65 50 L50 75 L35 50 L50 40" fill="#FFD700"/>
+                                        <path d="M35 55 L65 55" stroke="#FFD700" stroke-width="3"/>
+                                        <path d="M40 60 L60 60" stroke="#FFD700" stroke-width="2"/>
+                                        <path d="M50 45 L55 50 L50 55" fill="none" stroke="#FFD700" stroke-width="1.5"/>
+                                        
+                                        <!-- Decorative Elements -->
+                                        <path d="M20 30 Q50 25 80 30" fill="none" stroke="#FFD700" stroke-width="1"/>
+                                        <path d="M20 80 Q50 85 80 80" fill="none" stroke="#FFD700" stroke-width="1"/>
+                                        
+                                        <!-- Bottom Banner -->
+                                        <path d="M15 108 Q50 115 85 108" fill="#dc3545"/>
+                                        <text x="50" y="111" text-anchor="middle" font-family="Arial" font-size="8" fill="#FFD700">FOOTBALL CLUB</text>
                                     </svg>
                                 </div>
                             </div>
