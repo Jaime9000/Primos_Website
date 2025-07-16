@@ -1,0 +1,17 @@
+[Unit]
+Description=Primos de Peláez FC Web Application
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/primos
+Environment="PATH=/var/www/primos/dev-env/bin"
+Environment="FLASK_ENV=production"
+Environment="STRIPE_PUBLIC_KEY=your_stripe_public_key"
+Environment="STRIPE_SECRET_KEY=your_stripe_secret_key"
+Environment="STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret"
+ExecStart=/var/www/primos/dev-env/bin/gunicorn --config gunicorn.conf.py wsgi:app
+
+[Install]
+WantedBy=multi-user.target 
