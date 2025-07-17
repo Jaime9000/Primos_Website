@@ -10,6 +10,7 @@ from email.mime.multipart import MIMEMultipart
 import certifi
 from config import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, EMAIL_PASSWORD
 import json
+import os
 
 # Configure logging
 logging.basicConfig(
@@ -62,13 +63,14 @@ def send_receipt_email(payment_intent):
         logger.error(f"Failed to send receipt email: {str(e)}")
 
 app = Flask(__name__)
-# Enable CORS for the allowed domains
+# Enable CORS for Squarespace domains
 CORS(app, resources={
     r"/*": {
         "origins": [
-            "https://football-io.com",  # Production domain
-            "https://www.football-io.com",  # www subdomain
-            "http://localhost:5001"  # Local development
+            "https://*.squarespace.com",  # Squarespace preview domains
+            "https://football-io.com",    # Your custom domain on Squarespace
+            "https://www.football-io.com", # www subdomain
+            "http://localhost:5001"       # Local development
         ],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "X-Requested-With", "Authorization"]
@@ -361,5 +363,8 @@ def payment_cancel():
     return render_template('payment_cancel.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    # Get port from environment variable or use default
+    port = int(os.environ.get('PORT', 5001))
+    # Run the app
+    app.run(host='0.0.0.0', port=port)
 
